@@ -88,7 +88,7 @@ const InternalPageLayout: React.FC<{
   headerWidthClass?: string;
 }> = ({ headerImg, setView, children, headerWidthClass = "w-[60%] md:w-[50%]" }) => (
   <div className="w-full max-w-[700px] px-4 py-12 flex flex-col items-center">
-    {/* Header Image and Centered Back Button with reduced sizes */}
+    {/* Header Image and Centered Back Button - Critical for first fold */}
     <div className="w-full flex flex-col items-center gap-6 mb-12">
       <img 
         src={headerImg} 
@@ -96,18 +96,26 @@ const InternalPageLayout: React.FC<{
         className={`${headerWidthClass} h-auto`}
         decoding="async"
         fetchPriority="high"
+        loading="eager"
       />
       <button 
         onClick={() => setView('home')}
         className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[40%] md:w-[34%] max-w-[180px]"
       >
-        <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" decoding="async" fetchPriority="high" />
+        <img 
+          src={ASSETS.BOTAO_VOLTAR} 
+          alt="Voltar" 
+          className="w-full h-auto" 
+          decoding="async" 
+          fetchPriority="high" 
+          loading="eager"
+        />
       </button>
     </div>
 
     {children}
 
-    {/* Footer - Only WhatsApp Button, no styling */}
+    {/* Footer - WhatsApp Button requested to be instant */}
     <div className="w-full flex flex-col items-center mt-16">
       <a 
         href={LINKS.WHATSAPP} 
@@ -115,7 +123,14 @@ const InternalPageLayout: React.FC<{
         rel="noopener noreferrer"
         className="w-full max-w-[340px] transition-transform active:scale-95 hover:scale-105"
       >
-        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" loading="lazy" />
+        <img 
+          src={ASSETS.WHATSAPP} 
+          alt="WhatsApp" 
+          className="w-full h-auto" 
+          decoding="async" 
+          loading="eager"
+          fetchPriority="high"
+        />
       </a>
     </div>
   </div>
@@ -130,6 +145,7 @@ const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
         className="w-full h-auto drop-shadow-xl" 
         fetchPriority="high" 
         decoding="async"
+        loading="eager"
       />
     </div>
     <div className="w-[85%] mb-4">
@@ -139,11 +155,12 @@ const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
         className="w-full h-auto" 
         fetchPriority="high" 
         decoding="async"
+        loading="eager"
       />
     </div>
     <div className="w-full flex flex-col gap-5">
       <a href={LINKS.WHATSAPP} target="_blank" rel="noopener noreferrer" className="transition-transform active:scale-95 hover:scale-[1.02]">
-        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" />
+        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" loading="eager" fetchPriority="high" />
       </a>
       
       <button onClick={() => setView('photoshop')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
@@ -189,8 +206,9 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
               src={imgUrl} 
               alt={`Item ${index + 1}`} 
               className="w-full h-auto block" 
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              // Load the first 3 images immediately to cover the entire first screen
+              loading={index < 3 ? "eager" : "lazy"}
+              fetchPriority={index < 3 ? "high" : "auto"}
               decoding="async"
             />
           </div>
@@ -220,8 +238,8 @@ const VideoList: React.FC<{ videos: { id: string; type: string }[] }> = ({ video
             src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
             alt={`Thumbnail ${index + 1}`} 
             className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "auto"}
+            loading={index < 2 ? "eager" : "lazy"}
+            fetchPriority={index < 2 ? "high" : "auto"}
             decoding="async"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -274,8 +292,8 @@ const AIPagesView: React.FC<{ setView: (view: View) => void }> = ({ setView }) =
               alt={card.title} 
               className="w-full h-auto block" 
               style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', opacity: '1' }} 
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              loading={index < 2 ? "eager" : "lazy"}
+              fetchPriority={index < 2 ? "high" : "auto"}
               decoding="async"
             />
           </a>
@@ -298,7 +316,7 @@ const App: React.FC = () => {
       className="min-h-screen w-full flex flex-col items-center bg-cover bg-center bg-fixed"
       style={{ 
         backgroundImage: `url(${ASSETS.BACKGROUND})`,
-        backgroundColor: '#000' // Base color while image loads
+        backgroundColor: '#000' 
       }}
     >
       {view === 'photoshop' && <PhotoshopPage setView={handleSetView} />}
