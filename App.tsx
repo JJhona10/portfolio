@@ -213,7 +213,7 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
               src={imgUrl} 
               alt={`Item ${index + 1}`} 
               className="w-full h-auto block" 
-              // Load the first 3 images immediately to cover the entire first screen
+              // Carrega as primeiras 3 imagens imediatamente para cobrir toda a primeira tela (fold)
               loading={index < 3 ? "eager" : "lazy"}
               fetchPriority={index < 3 ? "high" : "auto"}
               decoding="async"
@@ -291,7 +291,7 @@ const AIPagesView: React.FC<{ setView: (view: View) => void }> = ({ setView }) =
             href={card.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full max-w-[380px] block"
+            className="w-full max-w-[380px] block transition-transform active:scale-95 hover:scale-[1.02]"
             style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', padding: '0', margin: '0', outline: 'none' }}
           >
             <img 
