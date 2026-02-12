@@ -60,7 +60,7 @@ const AI_CARDS = [
 ];
 
 const LINKS = {
-  WHATSAPP: 'https://wa.me/5500000000000',
+  WHATSAPP: 'https://wa.me/5544997180807',
 };
 
 type View = 'home' | 'photoshop' | 'after-effects' | 'ai-pages' | 'premiere';
@@ -72,12 +72,12 @@ const InternalPageLayout: React.FC<{
   children: React.ReactNode;
 }> = ({ headerImg, setView, children }) => (
   <div className="w-full max-w-[700px] px-4 py-12 flex flex-col items-center">
-    {/* 1 & 2 & 3: Header Image and Centered Back Button */}
+    {/* 1 & 2 & 3: Header Image and Centered Back Button with reduced sizes */}
     <div className="w-full flex flex-col items-center gap-6 mb-12">
-      <img src={headerImg} alt="Header Text" className="w-[85%] h-auto" />
+      <img src={headerImg} alt="Header Text" className="w-[60%] md:w-[50%] h-auto" />
       <button 
         onClick={() => setView('home')}
-        className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[60%] max-w-[280px]"
+        className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[40%] md:w-[34%] max-w-[180px]"
       >
         <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" />
       </button>
