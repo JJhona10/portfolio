@@ -90,12 +90,18 @@ const InternalPageLayout: React.FC<{
   <div className="w-full max-w-[700px] px-4 py-12 flex flex-col items-center">
     {/* Header Image and Centered Back Button with reduced sizes */}
     <div className="w-full flex flex-col items-center gap-6 mb-12">
-      <img src={headerImg} alt="Header Text" className={`${headerWidthClass} h-auto`} />
+      <img 
+        src={headerImg} 
+        alt="Header Text" 
+        className={`${headerWidthClass} h-auto`}
+        decoding="async"
+        fetchpriority="high" // Prioritize the header of the new page
+      />
       <button 
         onClick={() => setView('home')}
         className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[40%] md:w-[34%] max-w-[180px]"
       >
-        <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" />
+        <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" decoding="async" />
       </button>
     </div>
 
@@ -109,7 +115,7 @@ const InternalPageLayout: React.FC<{
         rel="noopener noreferrer"
         className="w-full max-w-[340px] transition-transform active:scale-95 hover:scale-105"
       >
-        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" />
+        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" loading="lazy" />
       </a>
     </div>
   </div>
@@ -118,30 +124,42 @@ const InternalPageLayout: React.FC<{
 const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
   <div className="w-full max-w-[480px] px-6 py-12 flex flex-col items-center gap-6">
     <div className="w-full mb-2">
-      <img src={ASSETS.FOTO} alt="Jhonatan Felipe" className="w-full h-auto drop-shadow-xl" />
+      <img 
+        src={ASSETS.FOTO} 
+        alt="Jhonatan Felipe" 
+        className="w-full h-auto drop-shadow-xl" 
+        fetchpriority="high" // Prioritize profile photo
+        decoding="async"
+      />
     </div>
     <div className="w-[85%] mb-4">
-      <img src={ASSETS.TEXTO_HOME} alt="Text Overlay" className="w-full h-auto" />
+      <img 
+        src={ASSETS.TEXTO_HOME} 
+        alt="Text Overlay" 
+        className="w-full h-auto" 
+        fetchpriority="high" // Prioritize introductory text
+        decoding="async"
+      />
     </div>
     <div className="w-full flex flex-col gap-5">
       <a href={LINKS.WHATSAPP} target="_blank" rel="noopener noreferrer" className="transition-transform active:scale-95 hover:scale-[1.02]">
-        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" />
+        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" />
       </a>
       
       <button onClick={() => setView('photoshop')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
-        <img src={ASSETS.PHOTOSHOP} alt="Photoshop" className="w-full h-auto" />
+        <img src={ASSETS.PHOTOSHOP} alt="Photoshop" className="w-full h-auto" decoding="async" />
       </button>
 
       <button onClick={() => setView('after-effects')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
-        <img src={ASSETS.AFTER_EFFECTS} alt="After Effects" className="w-full h-auto" />
+        <img src={ASSETS.AFTER_EFFECTS} alt="After Effects" className="w-full h-auto" decoding="async" />
       </button>
 
       <button onClick={() => setView('premiere')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
-        <img src={ASSETS.PREMIERE} alt="Premiere" className="w-full h-auto" />
+        <img src={ASSETS.PREMIERE} alt="Premiere" className="w-full h-auto" decoding="async" />
       </button>
 
       <button onClick={() => setView('ai-pages')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
-        <img src={ASSETS.AI_PAGES} alt="AI" className="w-full h-auto" />
+        <img src={ASSETS.AI_PAGES} alt="AI" className="w-full h-auto" decoding="async" />
       </button>
     </div>
   </div>
@@ -167,7 +185,13 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
             className="w-full overflow-hidden rounded-xl shadow-2xl bg-black/10 transition-transform hover:scale-[1.01] active:scale-[0.99] cursor-zoom-in"
             onClick={() => setSelectedImg(imgUrl)}
           >
-            <img src={imgUrl} alt={`Item ${index + 1}`} className="w-full h-auto block" loading="lazy" />
+            <img 
+              src={imgUrl} 
+              alt={`Item ${index + 1}`} 
+              className="w-full h-auto block" 
+              loading="lazy" 
+              decoding="async"
+            />
           </div>
         ))}
       </div>
@@ -195,7 +219,8 @@ const VideoList: React.FC<{ videos: { id: string; type: string }[] }> = ({ video
             src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
             alt={`Thumbnail ${index + 1}`} 
             className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
-            loading="lazy" 
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/40 transition-all group-active:scale-90 shadow-lg">
@@ -242,7 +267,14 @@ const AIPagesView: React.FC<{ setView: (view: View) => void }> = ({ setView }) =
             className="w-full max-w-[380px] block"
             style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', padding: '0', margin: '0', outline: 'none' }}
           >
-            <img src={card.image} alt={card.title} className="w-full h-auto block" style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', opacity: '1' }} loading="lazy" />
+            <img 
+              src={card.image} 
+              alt={card.title} 
+              className="w-full h-auto block" 
+              style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', opacity: '1' }} 
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         ))}
       </div>
@@ -261,7 +293,10 @@ const App: React.FC = () => {
   return (
     <div 
       className="min-h-screen w-full flex flex-col items-center bg-cover bg-center bg-fixed overflow-y-auto"
-      style={{ backgroundImage: `url(${ASSETS.BACKGROUND})` }}
+      style={{ 
+        backgroundImage: `url(${ASSETS.BACKGROUND})`,
+        backgroundColor: '#000' // Base color while image loads
+      }}
     >
       {view === 'photoshop' && <PhotoshopPage setView={handleSetView} />}
       {view === 'after-effects' && <AfterEffectsPage setView={handleSetView} />}
