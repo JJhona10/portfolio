@@ -85,11 +85,12 @@ const InternalPageLayout: React.FC<{
   headerImg: string; 
   setView: (view: View) => void;
   children: React.ReactNode;
-}> = ({ headerImg, setView, children }) => (
+  headerWidthClass?: string;
+}> = ({ headerImg, setView, children, headerWidthClass = "w-[60%] md:w-[50%]" }) => (
   <div className="w-full max-w-[700px] px-4 py-12 flex flex-col items-center">
     {/* Header Image and Centered Back Button with reduced sizes */}
     <div className="w-full flex flex-col items-center gap-6 mb-12">
-      <img src={headerImg} alt="Header Text" className="w-[60%] md:w-[50%] h-auto" />
+      <img src={headerImg} alt="Header Text" className={`${headerWidthClass} h-auto`} />
       <button 
         onClick={() => setView('home')}
         className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[40%] md:w-[34%] max-w-[180px]"
@@ -226,7 +227,11 @@ const PremierePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) 
 
 const AIPagesView: React.FC<{ setView: (view: View) => void }> = ({ setView }) => {
   return (
-    <InternalPageLayout headerImg={ASSETS.TEXTO_IA} setView={setView}>
+    <InternalPageLayout 
+      headerImg={ASSETS.TEXTO_IA} 
+      setView={setView} 
+      headerWidthClass="w-[69%] md:w-[58%]"
+    >
       <div className="w-full flex flex-col gap-8 mb-4 items-center">
         {AI_CARDS.map((card, index) => (
           <a 
