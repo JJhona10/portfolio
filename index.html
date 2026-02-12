@@ -5,22 +5,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jhonatan Felipe - Links</title>
-    <!-- Preconnect to image hosts for faster handshake -->
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://github.com" />
     <link rel="preconnect" href="https://raw.githubusercontent.com" />
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="image" href="https://github.com/JJhona10/imagens-bolt/blob/main/bg.png?raw=true" />
+    <link rel="preload" as="image" href="https://github.com/JJhona10/imagens-bolt/blob/main/texto.png?raw=true" />
+    <link rel="preload" as="image" href="https://github.com/JJhona10/imagens-bolt/blob/main/botao%20whats.png?raw=true" />
+    <link rel="preload" as="image" href="https://github.com/JJhona10/portifolio-midias/blob/main/botao%20voltar.png?raw=true" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-        background-color: #000; /* Fallback color to prevent white flash */
+        background-color: #000;
       }
-      /* Ensure smooth scrolling */
       html {
         scroll-behavior: smooth;
       }
-      /* Ensure images don't block and prevent layout shifts without interfering with lazy load */
       img {
         display: block;
         max-width: 100%;

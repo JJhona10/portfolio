@@ -115,7 +115,7 @@ const InternalPageLayout: React.FC<{
 
     {children}
 
-    {/* Footer - WhatsApp Button requested to be instant */}
+    {/* Footer - WhatsApp Button requested to be instant in all pages */}
     <div className="w-full flex flex-col items-center mt-16">
       <a 
         href={LINKS.WHATSAPP} 
@@ -160,7 +160,14 @@ const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
     </div>
     <div className="w-full flex flex-col gap-5">
       <a href={LINKS.WHATSAPP} target="_blank" rel="noopener noreferrer" className="transition-transform active:scale-95 hover:scale-[1.02]">
-        <img src={ASSETS.WHATSAPP} alt="WhatsApp" className="w-full h-auto" decoding="async" loading="eager" fetchPriority="high" />
+        <img 
+          src={ASSETS.WHATSAPP} 
+          alt="WhatsApp" 
+          className="w-full h-auto" 
+          decoding="async" 
+          loading="eager" 
+          fetchPriority="high" 
+        />
       </a>
       
       <button onClick={() => setView('photoshop')} className="transition-transform active:scale-95 hover:scale-[1.02] border-none bg-transparent p-0 cursor-pointer w-full">
