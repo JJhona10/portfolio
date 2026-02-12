@@ -41,6 +41,21 @@ const AFTER_EFFECTS_VIDEOS = [
   { id: 'JJOFBOafp5E', type: 'short' },
 ];
 
+const PREMIERE_VIDEOS = [
+  { id: 'O6O5ZYL17xQ', type: 'short' },
+  { id: 'wS4hLYog1PY', type: 'short' },
+  { id: 'LulxhovtIjo', type: 'short' },
+  { id: '3rlm3L_UyaM', type: 'short' },
+  { id: '7C60vdLZq6g', type: 'short' },
+  { id: '0D6y_EGcRJ8', type: 'short' },
+  { id: 'p4bkebBysMc', type: 'short' },
+  { id: 'U5olxHVEY2U', type: 'short' },
+  { id: '47i5zydCU1c', type: 'short' },
+  { id: 'Qi5chBuVzrU', type: 'short' },
+  { id: '9va14gsWqeo', type: 'standard' },
+  { id: 'P7M918mtRdg', type: 'standard' },
+];
+
 const AI_CARDS = [
   {
     image: 'https://github.com/JJhona10/portifolio-midias/blob/main/cards/ebook.png?raw=true',
@@ -72,7 +87,7 @@ const InternalPageLayout: React.FC<{
   children: React.ReactNode;
 }> = ({ headerImg, setView, children }) => (
   <div className="w-full max-w-[700px] px-4 py-12 flex flex-col items-center">
-    {/* 1 & 2 & 3: Header Image and Centered Back Button with reduced sizes */}
+    {/* Header Image and Centered Back Button with reduced sizes */}
     <div className="w-full flex flex-col items-center gap-6 mb-12">
       <img src={headerImg} alt="Header Text" className="w-[60%] md:w-[50%] h-auto" />
       <button 
@@ -85,7 +100,7 @@ const InternalPageLayout: React.FC<{
 
     {children}
 
-    {/* 4: Footer - Only WhatsApp Button, no styling */}
+    {/* Footer - Only WhatsApp Button, no styling */}
     <div className="w-full flex flex-col items-center mt-16">
       <a 
         href={LINKS.WHATSAPP} 
@@ -159,46 +174,53 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
   );
 };
 
+const VideoList: React.FC<{ videos: { id: string; type: string }[] }> = ({ videos }) => (
+  <div className="w-full flex flex-col gap-10 mb-4 items-center">
+    {videos.map((video, index) => {
+      const videoUrl = video.type === 'short' 
+        ? `https://www.youtube.com/shorts/${video.id}` 
+        : `https://www.youtube.com/watch?v=${video.id}`;
+      return (
+        <a 
+          key={index} 
+          href={videoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`group w-full max-w-[380px] overflow-hidden rounded-2xl shadow-2xl bg-black/40 relative transition-all duration-300 hover:scale-[1.02] hover:shadow-white/10 ${
+            video.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'
+          }`}
+        >
+          <img 
+            src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
+            alt={`Thumbnail ${index + 1}`} 
+            className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
+            loading="lazy" 
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/40 transition-all group-active:scale-90 shadow-lg">
+              <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+            </div>
+          </div>
+          <div className="absolute bottom-4 right-4 bg-black/60 px-3 py-1 rounded-full text-[10px] text-white/80 uppercase tracking-widest font-bold backdrop-blur-sm">
+            {video.type === 'short' ? 'Shorts' : 'Video'}
+          </div>
+        </a>
+      );
+    })}
+  </div>
+);
+
 const AfterEffectsPage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => {
   return (
     <InternalPageLayout headerImg={ASSETS.TEXTO_AE} setView={setView}>
-      <div className="w-full flex flex-col gap-10 mb-4 items-center">
-        {AFTER_EFFECTS_VIDEOS.map((video, index) => {
-          const videoUrl = video.type === 'short' 
-            ? `https://www.youtube.com/shorts/${video.id}` 
-            : `https://www.youtube.com/watch?v=${video.id}`;
-          return (
-            <a 
-              key={index} 
-              href={videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group w-full max-w-[380px] overflow-hidden rounded-2xl shadow-2xl bg-black/40 relative transition-all duration-300 hover:scale-[1.02] hover:shadow-white/10 ${
-                video.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'
-              }`}
-            >
-              <img src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover object-center opacity-70 group-hover:opacity-90 transition-opacity" loading="lazy" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/40 transition-all group-active:scale-90 shadow-lg">
-                  <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-                </div>
-              </div>
-              <div className="absolute bottom-4 right-4 bg-black/60 px-3 py-1 rounded-full text-[10px] text-white/80 uppercase tracking-widest font-bold backdrop-blur-sm">
-                {video.type === 'short' ? 'Shorts' : 'Video'}
-              </div>
-            </a>
-          );
-        })}
-      </div>
+      <VideoList videos={AFTER_EFFECTS_VIDEOS} />
     </InternalPageLayout>
   );
 };
 
 const PremierePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
   <InternalPageLayout headerImg={ASSETS.TEXTO_PR} setView={setView}>
-    <div className="w-full flex flex-col items-center gap-8 min-h-[200px] justify-center text-white/40 italic">
-      Portfólio em breve...
-    </div>
+    <VideoList videos={PREMIERE_VIDEOS} />
   </InternalPageLayout>
 );
 
