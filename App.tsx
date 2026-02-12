@@ -95,13 +95,13 @@ const InternalPageLayout: React.FC<{
         alt="Header Text" 
         className={`${headerWidthClass} h-auto`}
         decoding="async"
-        fetchpriority="high" // Prioritize the header of the new page
+        fetchPriority="high"
       />
       <button 
         onClick={() => setView('home')}
         className="transition-transform active:scale-95 hover:scale-105 bg-transparent border-none p-0 cursor-pointer w-[40%] md:w-[34%] max-w-[180px]"
       >
-        <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" decoding="async" />
+        <img src={ASSETS.BOTAO_VOLTAR} alt="Voltar" className="w-full h-auto" decoding="async" fetchPriority="high" />
       </button>
     </div>
 
@@ -128,7 +128,7 @@ const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
         src={ASSETS.FOTO} 
         alt="Jhonatan Felipe" 
         className="w-full h-auto drop-shadow-xl" 
-        fetchpriority="high" // Prioritize profile photo
+        fetchPriority="high" 
         decoding="async"
       />
     </div>
@@ -137,7 +137,7 @@ const HomePage: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
         src={ASSETS.TEXTO_HOME} 
         alt="Text Overlay" 
         className="w-full h-auto" 
-        fetchpriority="high" // Prioritize introductory text
+        fetchPriority="high" 
         decoding="async"
       />
     </div>
@@ -189,7 +189,8 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
               src={imgUrl} 
               alt={`Item ${index + 1}`} 
               className="w-full h-auto block" 
-              loading="lazy" 
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
             />
           </div>
@@ -219,7 +220,8 @@ const VideoList: React.FC<{ videos: { id: string; type: string }[] }> = ({ video
             src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
             alt={`Thumbnail ${index + 1}`} 
             className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
-            loading="lazy"
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "auto"}
             decoding="async"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -272,7 +274,8 @@ const AIPagesView: React.FC<{ setView: (view: View) => void }> = ({ setView }) =
               alt={card.title} 
               className="w-full h-auto block" 
               style={{ boxShadow: 'none', border: 'none', background: 'transparent', borderRadius: '0', opacity: '1' }} 
-              loading="lazy"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
             />
           </a>
@@ -292,7 +295,7 @@ const App: React.FC = () => {
 
   return (
     <div 
-      className="min-h-screen w-full flex flex-col items-center bg-cover bg-center bg-fixed overflow-y-auto"
+      className="min-h-screen w-full flex flex-col items-center bg-cover bg-center bg-fixed"
       style={{ 
         backgroundImage: `url(${ASSETS.BACKGROUND})`,
         backgroundColor: '#000' // Base color while image loads

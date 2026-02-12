@@ -20,9 +20,10 @@
       html {
         scroll-behavior: smooth;
       }
-      /* Improve image rendering and prevent layout shifts */
+      /* Ensure images don't block and prevent layout shifts without interfering with lazy load */
       img {
-        content-visibility: auto;
+        display: block;
+        max-width: 100%;
       }
     </style>
     <script type="importmap">
