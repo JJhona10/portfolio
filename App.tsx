@@ -225,41 +225,60 @@ const PhotoshopPage: React.FC<{ setView: (view: View) => void }> = ({ setView })
   );
 };
 
+const VideoItem: React.FC<{ video: { id: string; type: string }; index: number }> = ({ video, index }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  if (isPlaying) {
+    const embedUrl = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
+    return (
+      <div 
+        className={`w-full max-w-[380px] overflow-hidden rounded-2xl shadow-2xl bg-black relative animate-in fade-in duration-500 ${
+          video.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'
+        }`}
+      >
+        <iframe
+          src={embedUrl}
+          title={`Video ${index + 1}`}
+          className="w-full h-full border-none"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    );
+  }
+
+  return (
+    <button 
+      onClick={() => setIsPlaying(true)}
+      className={`group w-full max-w-[380px] overflow-hidden rounded-2xl shadow-2xl bg-black/40 relative transition-all duration-300 hover:scale-[1.02] hover:shadow-white/10 border-none p-0 cursor-pointer ${
+        video.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'
+      }`}
+    >
+      <img 
+        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
+        alt={`Thumbnail ${index + 1}`} 
+        className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
+        loading={index < 2 ? "eager" : "lazy"}
+        fetchPriority={index < 2 ? "high" : "auto"}
+        decoding="async"
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/40 transition-all group-active:scale-90 shadow-lg">
+          <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+        </div>
+      </div>
+      <div className="absolute bottom-4 right-4 bg-black/60 px-3 py-1 rounded-full text-[10px] text-white/80 uppercase tracking-widest font-bold backdrop-blur-sm">
+        {video.type === 'short' ? 'Shorts' : 'Video'}
+      </div>
+    </button>
+  );
+};
+
 const VideoList: React.FC<{ videos: { id: string; type: string }[] }> = ({ videos }) => (
   <div className="w-full flex flex-col gap-10 mb-4 items-center">
-    {videos.map((video, index) => {
-      const videoUrl = video.type === 'short' 
-        ? `https://www.youtube.com/shorts/${video.id}` 
-        : `https://www.youtube.com/watch?v=${video.id}`;
-      return (
-        <a 
-          key={index} 
-          href={videoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`group w-full max-w-[380px] overflow-hidden rounded-2xl shadow-2xl bg-black/40 relative transition-all duration-300 hover:scale-[1.02] hover:shadow-white/10 ${
-            video.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'
-          }`}
-        >
-          <img 
-            src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
-            alt={`Thumbnail ${index + 1}`} 
-            className="w-full h-full object-cover object-center opacity-100 group-hover:opacity-90 transition-opacity" 
-            loading={index < 2 ? "eager" : "lazy"}
-            fetchPriority={index < 2 ? "high" : "auto"}
-            decoding="async"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/40 transition-all group-active:scale-90 shadow-lg">
-              <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-            </div>
-          </div>
-          <div className="absolute bottom-4 right-4 bg-black/60 px-3 py-1 rounded-full text-[10px] text-white/80 uppercase tracking-widest font-bold backdrop-blur-sm">
-            {video.type === 'short' ? 'Shorts' : 'Video'}
-          </div>
-        </a>
-      );
-    })}
+    {videos.map((video, index) => (
+      <VideoItem key={index} video={video} index={index} />
+    ))}
   </div>
 );
 
