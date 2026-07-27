@@ -42,12 +42,12 @@ const AFTER_EFFECTS_VIDEOS = [
 ];
 
 const PREMIERE_VIDEOS = [
+  { id: '7C60vdLZq6g', type: 'short' },
+  { id: '0D6y_EGcRJ8', type: 'short' },
   { id: 'O6O5ZYL17xQ', type: 'short' },
   { id: 'wS4hLYog1PY', type: 'short' },
   { id: 'LulxhovtIjo', type: 'short' },
   { id: '3rlm3L_UyaM', type: 'short' },
-  { id: '7C60vdLZq6g', type: 'short' },
-  { id: '0D6y_EGcRJ8', type: 'short' },
   { id: 'p4bkebBysMc', type: 'short' },
   { id: 'U5olxHVEY2U', type: 'short' },
   { id: '47i5zydCU1c', type: 'short' },
